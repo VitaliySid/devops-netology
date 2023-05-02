@@ -8,4 +8,9 @@
 - Файлы с расширением `override.tf` и `override.tf.json`  
 - Файлы по шаблону `*_override.tf` и `*_override.tf.json`
 - Файлы с расширением `terraformrc`
-- Файлы с именем `terraform.rc`
+- Файлы с именем `terraform.rc`  
+
+
+Созданный токен доступа:  
+
+![](pic/token.png)
