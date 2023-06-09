@@ -3,7 +3,7 @@
 ### Задание 1
 
 Ошибка выполнения команды apply говорит о том, что для платформы "standard-v1" доступны ВМ с количеством ядер 2 и 4
-```
+```sh
 │ Error: Error while requesting API to create instance: server-request-id = 5b232f15-793b-43c2-85d2-a63547a58a71 server-trace-id = d5d3c5357503d235:a239c9e3fa535e3a:d5d3c5357503d235:1 client-request-id = a0cddceb-0f6a-41d1-84ea-62adca844f5f client-trace-id = d4b78646-0817-4a97-9d5a-fe72ab30d112 rpc error: code = InvalidArgument desc = the specified number of cores is not available on platform "standard-v1"; allowed core number: 2, 4     
 │
 │   with yandex_compute_instance.platform,
@@ -24,12 +24,9 @@
 
 ### Задание 2
 
-1. Изучите файлы проекта.
-2. Замените все "хардкод" **значения** для ресурсов **yandex_compute_image** и **yandex_compute_instance** на **отдельные** переменные. К названиям переменных ВМ добавьте в начало префикс **vm_web_** .  Пример: **vm_web_name**.
-2. Объявите нужные переменные в файле variables.tf, обязательно указывайте тип переменной. Заполните их **default** прежними значениями из main.tf. 
-3. Проверьте terraform plan (изменений быть не должно). 
+Файл [variables.tf](assets/terraform-02-syntax/src/variables.tf)  
 
-```
+```sh
 PS C:\projects\home\devops-netology\assets\terraform-02-syntax\src> terraform plan 
 yandex_vpc_network.develop: Refreshing state... [id=enpto914lsn87dm0cgq5]
 data.yandex_compute_image.ubuntu: Reading...
@@ -44,10 +41,9 @@ Terraform has compared your real infrastructure against your configuration and f
 
 ### Задание 3
 
-1. Создайте в корне проекта файл 'vms_platform.tf' . Перенесите в него все переменные первой ВМ.
-2. Скопируйте блок ресурса и создайте с его помощью вторую ВМ(в файле main.tf): **"netology-develop-platform-db"** ,  cores  = 2, memory = 2, core_fraction = 20. Объявите ее переменные с префиксом **vm_db_** в том же файле('vms_platform.tf').
-3. Примените изменения.
-```
+Файл [vms_platform.tf](assets/terraform-02-syntax/src/vms_platform.tf)  
+
+```shell
 PS C:\projects\home\devops-netology\assets\terraform-02-syntax\src> terraform apply
 data.yandex_compute_image.ubuntu: Reading...
 yandex_vpc_network.develop: Refreshing state... [id=enpto914lsn87dm0cgq5]
@@ -78,11 +74,9 @@ Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
 ```
 
 ### Задание 4
+Файл [outputs.tf](assets/terraform-02-syntax/src/outputs.tf)
 
-1. Объявите в файле outputs.tf output типа map, содержащий { instance_name = external_ip } для каждой из ВМ.
-2. Примените изменения.
-
-```
+```sh
 Outputs:
 
 external_ip_addresses = {
@@ -94,10 +88,9 @@ external_ip_addresses = {
 
 ### Задание 5
 
-1. В файле locals.tf опишите в **одном** local-блоке имя каждой ВМ, используйте интерполяцию ${..} с несколькими переменными по примеру из лекции.
-2. Замените переменные с именами ВМ из файла variables.tf на созданные вами local переменные.
-3. Примените изменения.
-```
+Файл [locals.tf](assets/terraform-02-syntax/src/locals.tf)
+
+```sh
 PS C:\projects\home\devops-netology\assets\terraform-02-syntax\src> terraform apply
 data.yandex_compute_image.ubuntu: Reading...
 yandex_vpc_network.develop: Refreshing state... [id=enpto914lsn87dm0cgq5]
@@ -122,37 +115,27 @@ external_ip_addresses = {
 
 ### Задание 6
 
-1. Вместо использования 3-х переменных  ".._cores",".._memory",".._core_fraction" в блоке  resources {...}, объедените их в переменные типа **map** с именами "vm_web_resources" и "vm_db_resources".
-2. Так же поступите с блоком **metadata {serial-port-enable, ssh-keys}**, эта переменная должна быть общая для всех ваших ВМ.
-3. Найдите и удалите все более не используемые переменные проекта.
-4. Проверьте terraform plan (изменений быть не должно).
+Файл [vms_metadata.tf](assets/terraform-02-syntax/src/vms_metadata.tf)  
+Файл [main.tf](assets/terraform-02-syntax/src/main.tf)  
 
-```
-PS C:\projects\home\devops-netology\assets\terraform-02-syntax\src> terraform plan
-data.yandex_compute_image.ubuntu: Reading...
-yandex_vpc_network.develop: Refreshing state... [id=enpto914lsn87dm0cgq5]
-data.yandex_compute_image.ubuntu: Read complete after 0s [id=fd83vhe8fsr4pe98v6oj]
-yandex_vpc_subnet.develop: Refreshing state... [id=e9bv4suv88ecktt912m4]
-yandex_compute_instance.platform: Refreshing state... [id=fhmj6qt4ecl4n2uuhfde]
-yandex_compute_instance.platform-db: Refreshing state... [id=fhm476vb8tu5r5e1u2ca]
+```shell
+variable "vms_metadata" {
+  type        = map
+  default = {
+    serial-port-enable = 1,
+    ssh-keys = "ubuntu:ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH11IEL+6KtNYHtjYvOOaUu81srhgVo7N/S0le90rBjF v_sid@LAPTOP-2QLN04RI"
+  }
+  description = "VM metadata"
+}
 
-No changes. Your infrastructure matches the configuration.
-
-Terraform has compared your real infrastructure against your configuration and found no differences, so no changes are needed.
+metadata = var.vms_metadata
 ```
 
 ------
 
 ### Задание 7*
 
-Изучите содержимое файла console.tf. Откройте terraform console, выполните следующие задания: 
-
-1. Напишите, какой командой можно отобразить **второй** элемент списка test_list?
-2. Найдите длину списка test_list с помощью функции length(<имя переменной>).
-3. Напишите, какой командой можно отобразить значение ключа admin из map test_map ?
-4. Напишите interpolation выражение, результатом которого будет: "John is admin for production server based on OS ubuntu-20-04 with X vcpu, Y ram and Z virtual disks", используйте данные из переменных test_list, test_map, servers и функцию length() для подстановки значений.
-
-```
+```sh
 PS C:\projects\home\devops-netology\assets\terraform-02-syntax\src> terraform console
 > local.test_list.1
 "staging"
