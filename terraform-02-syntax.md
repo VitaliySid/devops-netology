@@ -127,6 +127,20 @@ external_ip_addresses = {
 3. Найдите и удалите все более не используемые переменные проекта.
 4. Проверьте terraform plan (изменений быть не должно).
 
+```
+PS C:\projects\home\devops-netology\assets\terraform-02-syntax\src> terraform plan
+data.yandex_compute_image.ubuntu: Reading...
+yandex_vpc_network.develop: Refreshing state... [id=enpto914lsn87dm0cgq5]
+data.yandex_compute_image.ubuntu: Read complete after 0s [id=fd83vhe8fsr4pe98v6oj]
+yandex_vpc_subnet.develop: Refreshing state... [id=e9bv4suv88ecktt912m4]
+yandex_compute_instance.platform: Refreshing state... [id=fhmj6qt4ecl4n2uuhfde]
+yandex_compute_instance.platform-db: Refreshing state... [id=fhm476vb8tu5r5e1u2ca]
+
+No changes. Your infrastructure matches the configuration.
+
+Terraform has compared your real infrastructure against your configuration and found no differences, so no changes are needed.
+```
+
 ------
 
 ## Дополнительные задания (со звездочкой*)
