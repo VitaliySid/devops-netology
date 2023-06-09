@@ -143,11 +143,6 @@ Terraform has compared your real infrastructure against your configuration and f
 
 ------
 
-## Дополнительные задания (со звездочкой*)
-
-**Настоятельно рекомендуем выполнять все задания под звёздочкой.**   
-Их выполнение поможет глубже разобраться в материале. Задания под звёздочкой дополнительные (необязательные к выполнению) и никак не повлияют на получение вами зачета по этому домашнему заданию. 
-
 ### Задание 7*
 
 Изучите содержимое файла console.tf. Откройте terraform console, выполните следующие задания: 
@@ -157,28 +152,14 @@ Terraform has compared your real infrastructure against your configuration and f
 3. Напишите, какой командой можно отобразить значение ключа admin из map test_map ?
 4. Напишите interpolation выражение, результатом которого будет: "John is admin for production server based on OS ubuntu-20-04 with X vcpu, Y ram and Z virtual disks", используйте данные из переменных test_list, test_map, servers и функцию length() для подстановки значений.
 
-В качестве решения предоставьте необходимые команды и их вывод.
-
-------
-### Правила приема работы
-
-В git-репозитории, в котором было выполнено задание к занятию "Введение в Terraform", создайте новую ветку terraform-02, закомитьте в эту ветку свой финальный код проекта. Ответы на задания и необходимые скриншоты оформите в md-файле в ветке terraform-02.
-
-В качестве результата прикрепите ссылку на ветку terraform-02 в вашем репозитории.
-
-**ВАЖНО! Удалите все созданные ресурсы**.
-
-
-### Критерии оценки
-
-Зачёт:
-
-* выполнены все задания;
-* ответы даны в развёрнутой форме;
-* приложены соответствующие скриншоты и файлы проекта;
-* в выполненных заданиях нет противоречий и нарушения логики.
-
-На доработку:
-
-* задание выполнено частично или не выполнено вообще;
-* в логике выполнения заданий есть противоречия и существенные недостатки. 
+```
+PS C:\projects\home\devops-netology\assets\terraform-02-syntax\src> terraform console
+> local.test_list.1
+"staging"
+> length(local.test_list)
+3
+> local.test_map["admin"]
+> "${local.test_map["admin"]} is admin for production server based on OS ${local.servers.production.image} with ${local.servers.production.cpu} vcpu, ${local.servers.production.ram} ram and ${length(local.servers.production.disks)} virtual disks"
+"John is admin for production server based on OS ubuntu-20-04 with 10 vcpu, 40 ram and 4 virtual disks"
+>
+```
