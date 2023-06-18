@@ -16,7 +16,7 @@
 <details>
 <summary>Вывод консоли</summary>
 
-```
+``` sh
 PS D:\projects\devops-netology\assets\terraform-03-control-structures\src> terraform apply 
 
 Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
@@ -53,6 +53,9 @@ Apply complete! Resources: 3 added, 0 changed, 0 destroyed.
 4. Используйте функцию file в local переменной для считывания ключа ~/.ssh/id_rsa.pub и его последующего использования в блоке metadata, взятому из ДЗ №2.
 5. Инициализируйте проект, выполните код.
 
+Коммит:  
+[terraform 3.4](https://github.com/VitaliySid/devops-netology/commit/71f5ef45553aaf603dd97c5c2b106fe17b4af255)
+
 Файлы:  
 - [count-vm.tf](/assets//terraform-03-control-structures/src/count-vm.tf)  
 - [for_each-vm.tf](/assets//terraform-03-control-structures/src/for_each-vm.tf)  
@@ -65,7 +68,7 @@ Apply complete! Resources: 3 added, 0 changed, 0 destroyed.
 <details>
 <summary>Вывод консоли</summary>
 
-```
+```sh
 D:\projects\devops-netology\assets\terraform-03-control-structures\src> terraform apply
 data.yandex_compute_image.ubuntu: Reading...
 yandex_vpc_network.develop: Refreshing state... [id=enpredncv398taslojr7]
@@ -242,7 +245,7 @@ Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
 <details>
 <summary>Вывод консоли</summary>
 
-```
+```sh
 PS D:\projects\devops-netology\assets\terraform-03-control-structures\src> terraform apply -target yandex_compute_instance.storage_server
 data.yandex_compute_image.ubuntu: Reading...
 data.yandex_compute_image.ubuntu: Read complete after 1s [id=fd83vhe8fsr4pe98v6oj]
@@ -486,7 +489,7 @@ storage   ansible_host=51.250.95.252
 <details>
 <summary>Вывод консоли</summary>
 
-```
+```sh
 PS D:\projects\devops-netology\assets\terraform-03-control-structures\src> terraform apply -target local_file.hosts_cfg
 yandex_vpc_network.develop: Refreshing state... [id=enp62307hu4rjpummsdq]
 data.yandex_compute_image.ubuntu: Reading...
