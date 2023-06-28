@@ -11,7 +11,6 @@
 ![](pic/terraform-04-1-vm.png)  
 
 ------
-
 ### Задание 2
 
 1. Напишите локальный модуль vpc, который будет создавать 2 ресурса: **одну** сеть и **одну** подсеть в зоне, объявленной при вызове модуля. например: ```ru-central1-a```.
@@ -19,90 +18,197 @@
 3. Замените ресурсы yandex_vpc_network и yandex_vpc_subnet, созданным модулем.
 4. Сгенерируйте документацию к модулю с помощью terraform-docs.    
  
-Пример вызова:
-```
-module "vpc_dev" {
-  source       = "./vpc"
-  env_name     = "develop"
-  zone = "ru-central1-a"
-  cidr = "10.0.1.0/24"
-}
-```
+Ссылка на модуль [vpc](/assets/terraform-04-advanced-working-methods/src_1/vpc//main.tf)  
+Ссылка на [main.tf](/assets/terraform-04-advanced-working-methods/src_1/main.tf)   
+Ссылка на [README](/assets//terraform-04-advanced-working-methods/src_1/vpc/README.md)  
 
+---
 ### Задание 3
-1. Выведите список ресурсов в стейте.
+1. Выведите список ресурсов в стейте.  
+```sh
+PS D:\projects\devops-netology\assets\terraform-04-advanced-working-methods\src_1> terraform state list
+data.template_file.cloudinit
+module.test-vm.data.yandex_compute_image.my_image
+module.test-vm.yandex_compute_instance.vm[0]
+module.vpc_dev.yandex_vpc_network.develop
+module.vpc_dev.yandex_vpc_subnet.develop
+```
 2. Удалите из стейта модуль vpc.
+```sh
+PS D:\projects\devops-netology\assets\terraform-04-advanced-working-methods\src_1> terraform state rm "module.vpc_dev.yandex_vpc_network.develop"
+Removed module.vpc_dev.yandex_vpc_network.develop
+Successfully removed 1 resource instance(s).
+PS D:\projects\devops-netology\assets\terraform-04-advanced-working-methods\src_1> terraform state rm "module.vpc_dev.yandex_vpc_subnet.develop" 
+Removed module.vpc_dev.yandex_vpc_subnet.develop
+Successfully removed 1 resource instance(s).
+```
 3. Импортируйте его обратно. Проверьте terraform plan - изменений быть не должно.
 Приложите список выполненных команд и вывод.
+```sh
+PS D:\projects\devops-netology\assets\terraform-04-advanced-working-methods\src_1> terraform import "module.vpc_dev.yandex_vpc_network.develop" enpno4bepjcvji48uj1j      
+data.template_file.cloudinit: Reading...
+data.template_file.cloudinit: Read complete after 0s [id=816b655432a677c121d6deb4a0156b06c36014aeef6e39cedc68f2acb7d6b98c]
+module.vpc_dev.yandex_vpc_network.develop: Importing from ID "enpno4bepjcvji48uj1j"...
+module.test-vm.data.yandex_compute_image.my_image: Reading...
+module.vpc_dev.yandex_vpc_network.develop: Import prepared!
+  Prepared yandex_vpc_network for import
+module.vpc_dev.yandex_vpc_network.develop: Refreshing state... [id=enpno4bepjcvji48uj1j]
+module.test-vm.data.yandex_compute_image.my_image: Read complete after 0s [id=fd852pbtueis1q0pbt4o]
 
+Import successful!
+
+The resources that were imported are shown above. These resources are now in
+your Terraform state and will henceforth be managed by Terraform.
+
+PS D:\projects\devops-netology\assets\terraform-04-advanced-working-methods\src_1> terraform import "module.vpc_dev.yandex_vpc_subnet.develop" e9beha0h8tdn06m8lju4       
+data.template_file.cloudinit: Reading...
+data.template_file.cloudinit: Read complete after 0s [id=816b655432a677c121d6deb4a0156b06c36014aeef6e39cedc68f2acb7d6b98c]
+module.test-vm.data.yandex_compute_image.my_image: Reading...
+module.vpc_dev.yandex_vpc_subnet.develop: Importing from ID "e9beha0h8tdn06m8lju4"...
+module.vpc_dev.yandex_vpc_subnet.develop: Import prepared!
+  Prepared yandex_vpc_subnet for import
+module.vpc_dev.yandex_vpc_subnet.develop: Refreshing state... [id=e9beha0h8tdn06m8lju4]
+module.test-vm.data.yandex_compute_image.my_image: Read complete after 1s [id=fd852pbtueis1q0pbt4o]
+
+Import successful!
+
+The resources that were imported are shown above. These resources are now in
+your Terraform state and will henceforth be managed by Terraform.
+PS 
+D:\projects\devops-netology\assets\terraform-04-advanced-working-methods\src_1> terraform plan
+data.template_file.cloudinit: Reading...
+data.template_file.cloudinit: Read complete after 0s [id=816b655432a677c121d6deb4a0156b06c36014aeef6e39cedc68f2acb7d6b98c]
+module.test-vm.data.yandex_compute_image.my_image: Reading...
+module.vpc_dev.yandex_vpc_network.develop: Refreshing state... [id=enpno4bepjcvji48uj1j]
+module.test-vm.data.yandex_compute_image.my_image: Read complete after 0s [id=fd852pbtueis1q0pbt4o]
+module.vpc_dev.yandex_vpc_subnet.develop: Refreshing state... [id=e9beha0h8tdn06m8lju4]
+module.test-vm.yandex_compute_instance.vm[0]: Refreshing state... [id=fhmvde3847dq3rd6rj4k]
+
+No changes. Your infrastructure matches the configuration.
+
+Terraform has compared your real infrastructure against your configuration and found no differences, so no changes are needed.
+```
 ## Дополнительные задания (со звездочкой*)
 
 **Настоятельно рекомендуем выполнять все задания под звёздочкой.**   Их выполнение поможет глубже разобраться в материале.   
 Задания под звёздочкой дополнительные (необязательные к выполнению) и никак не повлияют на получение вами зачета по этому домашнему заданию. 
 
-
+---
 ### Задание 4*
 
 1. Измените модуль vpc так, чтобы он мог создать подсети во всех зонах доступности, переданных в переменной типа list(object) при вызове модуля.  
   
-Пример вызова:
+Ссылка на модуль [vpc_2](/assets/terraform-04-advanced-working-methods/src_1/vpc_2/main.tf)  
+
+![](pic/terraform-04-4-subnets.png)  
+
+
+<details>
+<summary>Листинг команд</summary>
+
+```sh
+PS D:\projects\devops-netology\assets\terraform-04-advanced-working-methods\src_1> terraform apply -target module.vpc_prod
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # module.vpc_prod.yandex_vpc_network.develop will be created
+  + resource "yandex_vpc_network" "develop" {
+      + created_at                = (known after apply)
+      + default_security_group_id = (known after apply)
+      + folder_id                 = (known after apply)
+      + id                        = (known after apply)
+      + labels                    = (known after apply)
+      + name                      = "production"
+      + subnet_ids                = (known after apply)
+    }
+
+  # module.vpc_prod.yandex_vpc_subnet.develop[0] will be created
+  + resource "yandex_vpc_subnet" "develop" {
+      + created_at     = (known after apply)
+      + folder_id      = (known after apply)
+      + id             = (known after apply)
+      + labels         = (known after apply)
+      + name           = "production-ru-central1-a"
+      + network_id     = (known after apply)
+      + v4_cidr_blocks = [
+          + "10.0.1.0/24",
+        ]
+      + v6_cidr_blocks = (known after apply)
+      + zone           = "ru-central1-a"
+    }
+
+  # module.vpc_prod.yandex_vpc_subnet.develop[1] will be created
+  + resource "yandex_vpc_subnet" "develop" {
+      + created_at     = (known after apply)
+      + folder_id      = (known after apply)
+      + id             = (known after apply)
+      + labels         = (known after apply)
+      + name           = "production-ru-central1-b"
+      + network_id     = (known after apply)
+      + v4_cidr_blocks = [
+          + "10.0.2.0/24",
+        ]
+      + v6_cidr_blocks = (known after apply)
+      + zone           = "ru-central1-b"
+    }
+
+  # module.vpc_prod.yandex_vpc_subnet.develop[2] will be created
+  + resource "yandex_vpc_subnet" "develop" {
+      + created_at     = (known after apply)
+      + folder_id      = (known after apply)
+      + id             = (known after apply)
+      + labels         = (known after apply)
+      + name           = "production-ru-central1-c"
+      + network_id     = (known after apply)
+      + v4_cidr_blocks = [
+          + "10.0.3.0/24",
+        ]
+      + v6_cidr_blocks = (known after apply)
+      + zone           = "ru-central1-c"
+    }
+
+Plan: 4 to add, 0 to change, 0 to destroy.
+╷
+│ Warning: Resource targeting is in effect
+│
+│ You are creating a plan with the -target option, which means that the result of this plan may not represent all of the changes requested by the current configuration.
+│
+│ The -target option is not for routine use, and is provided only for exceptional situations such as recovering from errors or mistakes, or when Terraform specifically suggests to use it as part of an error  
+│ message.
+╵
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+module.vpc_prod.yandex_vpc_network.develop: Creating...
+module.vpc_prod.yandex_vpc_network.develop: Creation complete after 1s [id=enpu832gt1quqh18t4v1]
+module.vpc_prod.yandex_vpc_subnet.develop[0]: Creating...
+module.vpc_prod.yandex_vpc_subnet.develop[1]: Creating...
+module.vpc_prod.yandex_vpc_subnet.develop[2]: Creating...
+module.vpc_prod.yandex_vpc_subnet.develop[1]: Creation complete after 1s [id=e2lnd0vlh9mbsdmrg43b]
+module.vpc_prod.yandex_vpc_subnet.develop[2]: Creation complete after 1s [id=b0cveavh8aspedmdec8g]
+module.vpc_prod.yandex_vpc_subnet.develop[0]: Creation complete after 2s [id=e9btl1k6k6u4ptd4ahhm]
+╷
+│ Warning: Applied changes may be incomplete
+│
+│ The plan was created with the -target option in effect, so some changes requested in the configuration may have been ignored and the output values may not be fully updated. Run the following command to     
+│ verify that no other changes are pending:
+│     terraform plan
+│
+│ Note that the -target option is not suitable for routine use, and is provided only for exceptional situations such as recovering from errors or mistakes, or when Terraform specifically suggests to use it   
+│ as part of an error message.
+╵
+
+Apply complete! Resources: 4 added, 0 changed, 0 destroyed.
 ```
-module "vpc_prod" {
-  source       = "./vpc"
-  env_name     = "production"
-  subnets = [
-    { zone = "ru-central1-a", cidr = "10.0.1.0/24" },
-    { zone = "ru-central1-b", cidr = "10.0.2.0/24" },
-    { zone = "ru-central1-c", cidr = "10.0.3.0/24" },
-  ]
-}
+</details>
 
-module "vpc_dev" {
-  source       = "./vpc"
-  env_name     = "develop"
-  subnets = [
-    { zone = "ru-central1-a", cidr = "10.0.1.0/24" },
-  ]
-}
-```
-
-Предоставьте код, план выполнения, результат из консоли YC.
-
-### Задание 5***
-
-1. Напишите модуль для создания кластера managed БД Mysql в Yandex Cloud с 1 или 3 хостами в зависимости от переменной HA=true или HA=false. Используйте ресурс yandex_mdb_mysql_cluster (передайте имя кластера и id сети).
-2. Напишите модуль для создания базы данных и пользователя в уже существующем кластере managed БД Mysql. Используйте ресурсы yandex_mdb_mysql_database и yandex_mdb_mysql_user (передайте имя базы данных, имя пользователя и id кластера при вызове модуля).
-3. Используя оба модуля, создайте кластер example из одного хоста, а затем добавьте в него БД test и пользователя app. Затем измените переменную и превратите сингл хост в кластер из 2х серверов.
-4. 
-Предоставьте план выполнения и по-возможности результат. Сразу же удаляйте созданные ресурсы, так как кластер может стоить очень дорого! Используйте минимальную конфигурацию.
-
-### Задание 6*
-
-1. Разверните у себя локально vault, используя docker-compose.yml в проекте.
-2. Для входа в web интерфейс и авторизации terraform в vault используйте токен "education"
-3. Создайте новый секрет по пути http://127.0.0.1:8200/ui/vault/secrets/secret/create  
-Path: example  
-secret data key: test 
-secret data value: congrats!  
-4. Считайте данный секрет с помощью terraform и выведите его в output по примеру:
-```
-provider "vault" {
- address = "http://<IP_ADDRESS>:<PORT_NUMBER>"
- skip_tls_verify = true
- token = "education"
-}
-data "vault_generic_secret" "vault_example"{
- path = "secret/example"
-}
-
-output "vault_example" {
- value = "${nonsensitive(data.vault_generic_secret.vault_example.data)}"
-} 
-
-можно обратится не к словарю, а конкретному ключу.
-terraform console: >nonsensitive(data.vault_generic_secret.vault_example.data.<имя ключа в секрете>)
-```
-5. Попробуйте самостоятельно разобраться в документации и записать новый секрет в vault с помощью terraform. 
-
+----
 
 
