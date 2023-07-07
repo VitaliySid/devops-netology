@@ -3,13 +3,9 @@ output "vpc_id" {
 }
 
 output "subnet_ids" {
-  value = {
-    for k, sbn in yandex_vpc_subnet.develop : k => sbn.id
-  }
+  value = yandex_vpc_subnet.develop[*].id
 }
 
 output "vpc_zones" {
-  value = {
-    for k, sbn in yandex_vpc_subnet.develop : k => sbn.zone
-  }
+  value = yandex_vpc_subnet.develop[*].zone
 }
