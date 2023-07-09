@@ -163,7 +163,7 @@ Check: CKV_TF_1: "Ensure Terraform module sources use a commit hash"
 <details>
 <summary>Проект `src`</summary>
 
-```
+```sh
 qwuen@MSI:/mnt/d/projects/devops-netology/assets/terraform-05-teamwork$ checkov -d src/
 [ secrets framework ]: 100%|████████████████████|[4/4], Current File Scanned=src/variables.tf
 [ terraform framework ]: 100%|████████████████████|[3/3], Current File Scanned=variables.tf
@@ -203,6 +203,64 @@ By bridgecrew.io | version: 2.3.314
 4. Вставьте в комментарий PR результат анализа tflint и checkov, план изменений инфраструктуры из вывода команды terraform plan.
 5. Пришлите ссылку на PR для ревью(вливать код в 'terraform-05' не нужно).
 
+<details>
+<summary>Анализ `src_1`</summary>
+
+```sh
+qwuen@MSI:/mnt/d/projects/devops-netology/assets/terraform-05-teamwork$ checkov -d src_1/
+[ kubernetes framework ]: 100%|████████████████████|[1/1], Current File Scanned=cloud-init.yml
+[ secrets framework ]: 100%|████████████████████|[6/6], Current File Scanned=src_1/vpc_2/variables.tf
+[ ansible framework ]: 100%|████████████████████|[1/1], Current File Scanned=cloud-init.yml
+2023-07-08 10:18:04,635 [MainThread  ] [WARNI]  Failed to download module git::https://github.com/udjin10/yandex_compute_instance.git?ref=main:None (for external modules, the --download-external-modules flag is required)
+[ terraform framework ]: 100%|████████████████████|[5/5], Current File Scanned=vpc_2/variables.tf
+
+       _               _
+   ___| |__   ___  ___| | _______   __
+  / __| '_ \ / _ \/ __| |/ / _ \ \ / /
+ | (__| | | |  __/ (__|   < (_) \ V /
+  \___|_| |_|\___|\___|_|\_\___/ \_/
+
+By bridgecrew.io | version: 2.3.314
+
+terraform scan results:
+
+Passed checks: 0, Failed checks: 1, Skipped checks: 0
+
+Check: CKV_TF_1: "Ensure Terraform module sources use a commit hash"
+        FAILED for resource: test-vm
+        File: /main.tf:43-59
+
+                43 | module "test-vm" {
+                44 |   source         = "git::https://github.com/udjin10/yandex_compute_instance.git?ref=main"
+                45 |   env_name       = "develop"
+                46 |   network_id     = module.vpc_dev.vpc_id
+                47 |   subnet_zones   = module.vpc_dev.vpc_zones
+                48 |   subnet_ids     = module.vpc_dev.subnet_ids
+                49 |   instance_name  = "web"
+                50 |   instance_count = 1
+                51 |   image_family   = "ubuntu-2004-lts"
+                52 |   public_ip      = true
+                53 |
+                54 |   metadata = {
+                55 |     user-data          = data.template_file.cloudinit.rendered
+                56 |     serial-port-enable = 1
+                57 |   }
+                58 |
+                59 | }
+
+
+qwuen@MSI:/mnt/d/projects/devops-netology/assets/terraform-05-teamwork$ tflint --chdir src_1
+6 issue(s) found:
+
+src_1/main.tf:44:20: Warning - Module source "git::https://github.com/udjin10/yandex_compute_instance.git?ref=main" uses a default branch as ref (main) (terraform_module_pinned_source)
+src_1/main.tf:3:14: Warning - Missing version constraint for provider "yandex" in `required_providers` (terraform_required_providers)
+src_1/main.tf:62:1: Warning - Missing version constraint for provider "template" in `required_providers` (terraform_required_providers)
+src_1/variables.tf:28:1: Warning - variable "vpc_name" is declared but not used (terraform_unused_declarations)
+src_1/variables.tf:34:1: Warning - variable "public_key" is declared but not used (terraform_unused_declarations)
+src_1/variables.tf:22:1: Warning - variable "default_cidr" is declared but not used (terraform_unused_declarations)
+```
+</details>
+
 ------
 ### Задание 4
 
@@ -211,10 +269,15 @@ By bridgecrew.io | version: 2.3.314
 - type=string, description="ip-адрес", проверка что значение переменной содержит верный IP-адрес с помощью функций cidrhost() или regex(). Тесты:  "192.168.0.1" и "1920.1680.0.1"
 - type=list(string), description="список ip-адресов", проверка что все адреса верны.  Тесты:  ["192.168.0.1", "1.1.1.1", "127.0.0.1"] и ["192.168.0.1", "1.1.1.1", "1270.0.0.1"]
 
-## Дополнительные задания (со звездочкой*)
+Решение заданий 4,5:  
+[Исходный код тестов](assets/terraform-05-teamwork/tests/)
 
-**Настоятельно рекомендуем выполнять все задания под звёздочкой.**   Их выполнение поможет глубже разобраться в материале.   
-Задания под звёздочкой дополнительные (необязательные к выполнению) и никак не повлияют на получение вами зачета по этому домашнему заданию. 
+### Успешный тест
+![](pic/terraform-05-4-5-success-test.png)  
+
+### Неуспешный тест
+![](pic/terraform-05-4-5-fail-test.png)  
+
 ------
 ### Задание 5*
 1. Напишите переменные с валидацией:
@@ -240,34 +303,3 @@ variable "in_the_end_there_can_be_only_one" {
 }
 ```
 ------
-### Задание 6**  
-
-1. Настройте любую известную вам CI/CD систему.
-2. Скачайте с ее помощью ваш репозиторий с кодом и инициализируйте инфраструктуру.
-3. Уничтожтье инфраструктуру тем же способом.
-
-
-### Правила приема работы
-
-Ответы на задания и необходимые скриншоты оформите в md-файле в ветке terraform-05.
-
-В качестве результата прикрепите ссылку на ветку terraform-05 в вашем репозитории.
-
-**ВАЖНО!** Удалите все созданные ресурсы.
-
-### Критерии оценки
-
-Зачёт:
-
-* выполнены все задания;
-* ответы даны в развёрнутой форме;
-* приложены соответствующие скриншоты и файлы проекта;
-* в выполненных заданиях нет противоречий и нарушения логики.
-
-На доработку:
-
-* задание выполнено частично или не выполнено вообще;
-* в логике выполнения заданий есть противоречия и существенные недостатки. 
-
-
-
