@@ -201,7 +201,9 @@ By bridgecrew.io | version: 2.3.314
 2. Проверье код с помощью tflint и checkov, исправьте все предупреждения и ошибки в 'terraform-hotfix', сделайте комит.
 3. Откройте новый pull request 'terraform-hotfix' --> 'terraform-05'. 
 4. Вставьте в комментарий PR результат анализа tflint и checkov, план изменений инфраструктуры из вывода команды terraform plan.
-5. Пришлите ссылку на PR для ревью(вливать код в 'terraform-05' не нужно).
+5. Пришлите ссылку на PR для ревью(вливать код в 'terraform-05' не нужно).  
+
+[Ссылка на pull request](https://github.com/VitaliySid/devops-netology/pull/1)
 
 <details>
 <summary>Анализ `src_1`</summary>
