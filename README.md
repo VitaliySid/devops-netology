@@ -17,3 +17,5 @@
 * [Домашнее задание к занятию "Продвинутые методы работы с Terraform"](/terraform-04-advanced-working-methods.md)
 
 * [Домашнее задание к занятию "Использование Terraform в команде"](/terraform-05-teamwork.md)
+
+* [Домашнее задание к занятию 1 «Введение в Ansible»](/08-ansible-01-base.md)
