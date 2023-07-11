@@ -20,25 +20,20 @@ pip3 install ansible --user
 - `Ansible-pull` — скачивание playbook и запуск на localhost
 - `Ansible-test` — тестирование collections
 
-<details>
-<summary>Полезные утилиты</summary>
+Команды:  
+```sh
+ansible -m ping localhost #Сделаем ping на localhost
+ansible -m ping -i inventory.yml all #Сделаем ping на всех хостах из inventory
+ansible -m ping -i inventory.yml <group_name> #Сделаем ping на всех хостах группы <group_name>
+ansible-playbook -i inventory/test.yml site.yml #Запуск site на хостах из test
+ansible-inventory -i inventory.yml --graph <group_name> #Показать хосты группы
+ansible-inventory -i inventory.yml --list #Показать все переменные всех хостов из inventory
+ansible-inventory -i inventory.yml --list <hostname> #Показать все переменные хоста из inventory
+ansible-doc <plugin_name> #Показать документацию по плагину
+ansible-vault create <filename> #Создать новый зашифрованный файла
+ansible-vault edit <filename> #Отредактировать зашифрованный файла
+ansible-vault view <filename> #Просмотреть зашифрованный файла
+ansible-vault rekey <filename> #Поменять пароль у файла
+ansible-vault decrypt <filename> #Расшифровать файл
 
-- [terraform-switcher](https://tfswitch.warrensbox.com/) 
-Инструмент командной строки позволяет легко переключаться
-между различными версиями Terraform с помощью команды `tfswitch <version>`
-
-- [terraform-docs](https://terraform-docs.io/user-guide/introduction/) 
-Утилита автоматически генерирует описание ресурсов, переменных и зависимостей.  
-Console команда:  
-`terraform-docs markdown table --output-file README.md .`  
-Docker команда:
 ```
-docker run --rm --volume "$(pwd):/terraform-docs" -u $(id -u)\
-quay.io/terraform-docs/terraform-docs:0.16.0 markdown /terraform-docs
-```
-- [terraform-switcher](https://tfswitch.warrensbox.com/) 
-Инструмент командной строки позволяет легко переключаться
-между различными версиями Terraform с помощью команды `tfswitch <version>`
-</details>
-
----
