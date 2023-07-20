@@ -1,8 +1,8 @@
 $clickhouse_name = "clickhouse-01"
-$clickhouse_ip = "192.168.0.200"
+$clickhouse_ip = "192.168.56.10"
 $vector_name = "vector-01"
-$vector_ip = "192.168.0.201"
-$box = "CentOS-7"
+$vector_ip = "192.168.56.15"
+$box = "centos7"
 $ssh_public_key_path = "~/.ssh/id_rsa.pub"
 
 Vagrant.configure("2") do |config|
@@ -13,7 +13,7 @@ Vagrant.configure("2") do |config|
     end
     config.vm.box = $box
     config.vm.hostname = $clickhouse_name
-    config.vm.network "public_network", ip: $clickhouse_ip
+    config.vm.network "private_network", ip: $clickhouse_ip
     config.vm.provision 'file', 
         source: $ssh_public_key_path, 
         destination: '~/.ssh/authorized_keys'
@@ -24,7 +24,7 @@ Vagrant.configure("2") do |config|
     config.vm.define $vector_name do |config|
       config.vm.box = $box
       config.vm.hostname = $vector_name
-      config.vm.network "public_network", ip: $vector_ip
+      config.vm.network "private_network", ip: $vector_ip
       config.vm.provision 'file', 
       source: $ssh_public_key_path, 
       destination: '~/.ssh/authorized_keys'

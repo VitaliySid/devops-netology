@@ -1,9 +1,11 @@
 ---
 clickhouse:
   hosts:
-    centos7:
-      ansible_connection: docker
+    clickhouse-01:
+      ansible_host: 192.168.56.10
+      ansible_user: vagrant
 vector:
   hosts:
-    centos7:
-      ansible_connection: docker
+    vector-01:
+      ansible_host: 192.168.56.15
+      ansible_user: vagrant

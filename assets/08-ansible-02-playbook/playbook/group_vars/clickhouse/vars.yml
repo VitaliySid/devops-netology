@@ -1,6 +1,6 @@
 ---
 clickhouse_database_name: logs
-clickhouse_create_table_name: syslog
+clickhouse_create_table_name: dummy_logs
 clickhouse_version: "22.3.3.44"
 clickhouse_packages:
   - clickhouse-client
