@@ -265,6 +265,7 @@ INFO     Pruning extra files from scenario ephemeral directory
 ```
 </details>
 
+[Ссылка на репозиторий](https://github.com/VitaliySid/vector-role/blob/1.0.1/README.md)
 [Ссылка на тег vector_1.0.1](https://github.com/VitaliySid/vector-role/releases/tag/1.0.1)
 
 ### Tox
