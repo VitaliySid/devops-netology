@@ -45,3 +45,6 @@ terraform.rc
 
 # own secret vars store.
 personal.auto.tfvars
+
+**/mvn/target/**
+**/.scannerwork/**
