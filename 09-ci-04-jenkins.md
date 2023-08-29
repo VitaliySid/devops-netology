@@ -38,7 +38,13 @@ Freestyle Job:
 Declarative Pipeline Job:  
 [vector-role](https://github.com/VitaliySid/vector-role/tree/main)  
 [DeclarativeJenkinsfile](assets/09-ci-04-jenkins/DeclarativeJenkinsfile)  
+![](pic/09-ci-04-jenkins-declarative.png)  
+![](pic/09-ci-04-jenkins-declarative-1.png)    
+
+Multibranch Pipeline:  
+![](pic/09-ci-04-jenkins-multibranch.png)  
 
 ScriptedJob:  
 ![](pic/09-ci-04-jenkins-scripted.png)  
+![](pic/09-ci-04-jenkins-scripted-prop.png)  
 [ScriptedJob](assets/09-ci-04-jenkins/ScriptedJob)  
