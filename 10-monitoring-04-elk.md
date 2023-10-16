@@ -30,6 +30,7 @@ Filebeat следует сконфигурировать для отправки
 
 <details>
 <summary>Вывод в консоль</summary>
+
 ```sh
 qwuen@LAPTOP-2QLN04RI:/mnt/c/projects/home/devops-netology/assets/10-monitoring-04-elk$ docker ps -a
 CONTAINER ID   IMAGE                    COMMAND                  CREATED          STATUS          PORTS                                                                                            NAMES
