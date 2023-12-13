@@ -12,7 +12,7 @@
 
 Манифесты:
 - [deployment.yml](/assets/12-kuber-03/deployment.yml)
-- [deployment.yml](/assets/12-kuber-03/nginx-service.yml)
+- [nginx-service.yml](/assets/12-kuber-03/nginx-service.yml)
 
 1. Создать Deployment приложения, состоящего из двух контейнеров — nginx и multitool. Решить возникшую ошибку.
 ``` sh
@@ -123,8 +123,8 @@ nginx-deployment-86b8cf8d84-mtp2n   2/2     Running   0          14h
 ### Задание 2. Создать Deployment и обеспечить старт основного контейнера при выполнении условий
 
 Манифесты:
-- [deployment.yml](/assets/12-kuber-03/deployment-deps.yml)
-- [deployment.yml](/assets/12-kuber-03/nginx-service.yml)
+- [deployment-deps.yml](/assets/12-kuber-03/deployment-deps.yml)
+- [nginx-service.yml](/assets/12-kuber-03/nginx-service.yml)
 
 1. Создать Deployment приложения nginx и обеспечить старт контейнера только после того, как будет запущен сервис этого приложения.
 2. Убедиться, что nginx не стартует. В качестве Init-контейнера взять busybox.
