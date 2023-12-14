@@ -103,3 +103,7 @@ Commercial support is available at
 </body>
 </html>
 ```
+
+Манифесты:  
+- [ng-multi-deployment.yml](/assets/12-kuber-04/manifests/ng-multi-deployment.yml)
+- [ng-nodeport-service.yml](/assets/12-kuber-04/manifests/ng-nodeport-service.yml)
