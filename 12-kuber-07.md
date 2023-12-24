@@ -184,7 +184,7 @@ persistentvolume/pvc-723248ee-e862-4396-a92e-b8fe212c2ad2   1Gi        RWO      
 3. Продемонстрировать возможность чтения и записи файла изнутри пода. 
 ```sh
 deployment2-64b5489dcb-p4l9x:/# echo "$(date +'%T %F')" >> /input/input.log
-deployment2-64b5489dcb-p4l9x:/# cat /input/unput.log
+deployment2-64b5489dcb-p4l9x:/# cat /input/input.log
 18:53:17 2023-12-24
 ```
 4. Предоставить манифесты, а также скриншоты или вывод необходимых команд.
