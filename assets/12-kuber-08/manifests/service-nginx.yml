@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: nginx-srv
+  name: nginx-svc
 spec:
   selector:
-    app: myapp
+    app: nginx-app
   ports:
     - name: nginx-http
       port: 80

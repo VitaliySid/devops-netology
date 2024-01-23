@@ -2,22 +2,22 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: netology-cnf-secret-ingress
+  name: nginx-ingress
   labels:
     name: main-ingess
 spec:
   tls:
     - hosts:
-        - localhost
-      secretName: netology-cnf-secret-nginx-tls
+        - my-site.ru
+      secretName: nginx-tls
   rules:
-    - host: localhost
+    - host: my-site.ru
       http:
         paths:
           - pathType: Prefix
             path: "/"
             backend:
               service:
-                name: netology-cnf-secret-service
+                name: nginx-svc
                 port:
                   number: 443
