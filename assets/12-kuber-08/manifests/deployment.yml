@@ -17,15 +17,16 @@ spec:
       containers:
         - name: multitool
           image: wbitt/network-multitool
-          volumeMounts:
-            - name: nginx
-              mountPath: /usr/share/nginx/html/
           env:
             - name: HTTP_PORT
-              value: "80"
+              value: "8080"
+            - name: HTTPS_PORT
+              value: "10443"
           ports:
-            - containerPort: 80
+            - containerPort: 8080
               name: http-port
+            - containerPort: 10443
+              name: https-port
           resources:
             requests:
               cpu: "100m"
@@ -33,21 +34,12 @@ spec:
             limits:
               cpu: "150m"
               memory: "200Mi"
-        - name: busybox
-          image: busybox
-          command:
-            [
-              "sh",
-              "-c",
-              "while true; do watch -n 5 date >> /output/output.txt; sleep 5; done",
-            ]
+        - name: nginx-app
+          image: nginx:1.25.3
           volumeMounts:
-            - name: busybox-volume
-              mountPath: /output
+            - name: nginx
+              mountPath: /usr/share/nginx/html/
       volumes:
-        - name: busybox-volume
-          hostPath:
-            path: /tmp/logs/busybox
         - name: nginx
           configMap:
             name: nginx-configmap
