@@ -48,3 +48,5 @@ personal.auto.tfvars
 
 **/mvn/target/**
 **/.scannerwork/**
+
+**/certs/**
