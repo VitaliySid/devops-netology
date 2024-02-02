@@ -69,8 +69,7 @@ pip 23.3.2 from /home/ubuntu/.local/lib/python3.9/site-packages/pip (python 3.9)
 ubuntu@fhm6qodc3d41q3u7v975:~/kubespray$ python3.9 -m pip install -r requirements.txt
 ubuntu@fhm6qodc3d41q3u7v975:~/kubespray$ cp -rfp inventory/sample inventory/mycluster
 ubuntu@fhm6qodc3d41q3u7v975:~/kubespray$ declare -a IPS=(10.0.1.29 10.0.1.26 10.0.1.24 10.0.1.31 10.0.1.35)
-ubuntu@fhm6qodc3d41q3u7v975:~/kubespray$ CONFIG_FILE=inventory/mycluster/hosts.yaml python3.9 contrib/inventory_builder/
-inventory.py ${IPS[@]}
+ubuntu@fhm6qodc3d41q3u7v975:~/kubespray$ CONFIG_FILE=inventory/mycluster/hosts.yaml python3.9 contrib/inventory_builder/inventory.py ${IPS[@]}
 DEBUG: Adding group all
 DEBUG: Adding group kube_control_plane
 DEBUG: Adding group kube_node
