@@ -445,7 +445,7 @@ helm upgrade --install ingress-nginx ingress-nginx \
 [gitlab-ci.yml](https://gitlab.com/qwuens/gitlab-netology/-/blob/main/.gitlab-ci.yml?ref_type=heads)  
 
 3. Репозиторий с конфигурацией ansible, если был выбран способ создания Kubernetes кластера при помощи ansible.  
-[Kubespray inventory hosts.yaml](assets/devops-diplom-yandexcloud/kubespray/hosts.yaml)  
+[Kubespray inventory hosts.yaml](assets/devops-diplom-yandexcloud/ansible/hosts.yaml)  
 
 4. Репозиторий с Dockerfile тестового приложения и ссылка на собранный docker image.  
 [Application gitlab](https://gitlab.com/qwuens/gitlab-netology.git)  
